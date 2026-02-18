@@ -1,0 +1,26 @@
+flowchart TD
+    B0[Driver accepts schedule] --> B1
+    
+    B1[Step 1: Reach pickup<br/>Uses Google Maps] --> B2
+    B2[Step 2: Verify food<br/>Quantity, type, quality] --> B2Q
+    
+    B2Q{Food OK?} -->|No| B2A
+    B2Q -->|Yes| B3
+    
+    B2A[Call coordinator<br/>Cancel if needed] --> B2END
+    B2END[End: Cancelled]
+    
+    B3[Step 3: Take photos<br/>Food closeup, donor] --> B4
+    B4[Step 4: Weigh food<br/>Enter 32kg] --> B5
+    B5[Step 5: Get signature<br/>Photo acknowledgement] --> B6
+    
+    B6[Step 6: Submit pickup<br/>Form: ID, GPS, time,<br/>photos, notes<br/>Status: Pending Verification] --> B7
+    
+    B7[Travel to drop] --> B8
+    B8[Step 8: Reach NGO] --> B9
+    B9[Step 9: Deliver food] --> B10
+    B10[Step 10: Drop photos<br/>Handover, beneficiary] --> B11
+    
+    B11[Step 11: Submit drop<br/>Form: ID, GPS, time,<br/>photos, signature,<br/>people served<br/>Status: Pending Verification] --> BEND
+    
+    BEND[End: Completed]

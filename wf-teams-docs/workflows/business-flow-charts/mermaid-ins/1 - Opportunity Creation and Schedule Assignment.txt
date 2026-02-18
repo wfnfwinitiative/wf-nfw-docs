@@ -1,0 +1,21 @@
+flowchart TD
+    A0[Trigger: Coordinator receives demand OR supply] --> A1
+    A1[Step 1: Review request<br/>Demand: NGO needs 100kg<br/>Supply: IIT has 90kg surplus] --> A2
+    A2[Step 2: Create schedule<br/>Ticket: SCH-20260205-001<br/>Pickup: IIT GPS<br/>Drop: NGO GPS<br/>Time windows] --> A3
+    
+    A3{Step 3: Relationship type?} -->|One-to-One| B1
+    A3 -->|One-to-Many| B2
+    
+    B1[One-to-One<br/>1 pickup to 1 drop<br/>1 driver] --> A4
+    B2[One-to-Many<br/>1 pickup to 3 drops<br/>100kg split: 40/30/30kg<br/>1 parent + 3 child tickets] --> A4
+    
+    A4[Step 5: Assign driver<br/>Check: availability, location,<br/>vehicle capacity] --> A5
+    
+    A5[Step 6: Send to driver<br/>App/SMS with:<br/>- Ticket ID<br/>- Map links<br/>- Time windows<br/>- Contacts] --> A6
+    
+    A6[Step 7: Driver confirms<br/>Status: Assigned to Accepted] --> A7
+    
+    A7[Step 8: Track status<br/>Dashboard shows:<br/>Pending, In-progress,<br/>Completed, Delayed] --> A8
+    
+    A8[End: Schedule assigned]
+

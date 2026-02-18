@@ -1,0 +1,54 @@
+flowchart TD
+    START[3. WORKFLOW 3:<br/>Manual Verification<br/>by Operations Coordinator<br/>Goal: Verify submissions<br/>before official record] --> C0
+    
+    C0[STEP 1: System creates<br/>verification task<br/>New submission in<br/>Verification Queue<br/>Status: Pending Verification<br/>Assigned to Coordinator<br/>Priority: FIFO by time] --> C1
+    
+    C1[STEP 2: Coordinator opens<br/>Verification Dashboard<br/>Shows:<br/>• Total pending: 24<br/>• Today's: 12<br/>• Urgent >12hrs: 3<br/>• By driver: Ramesh-5,<br/>Suresh-4, Priya-3<br/>Load time: <1sec] --> C2
+    
+    C2[STEP 3: Select submission<br/>Click: #PICKUP-20260205-001] --> C3
+    
+    C3[STEP 4: Submission Details Panel<br/>Submission ID: PICKUP-20260205-001<br/>Ticket ID: SCH-20260205-001<br/>Type: Pickup<br/>Driver: Ramesh Kumar<br/>Submitted: 5 Feb 2:18 PM<br/>Status: Pending Verification<br/>Pickup details:<br/>• Location: Restaurant B<br/>• GPS: 12.9716,77.5946<br/>• Time: 2:15 PM<br/>• Food: rice+veg<br/>• Quantity: 32kg<br/>• Photos: food, containers<br/>• Donor: Mr Kumar<br/>• Notes: Fresh, 4 containers] --> C4
+    
+    C4[STEP 5: Review Each Element] --> C5
+    
+    C5[CHECK 1: Photos clear<br/>and visible?] --> D1{D1}
+    D1 -->|No| RJ1
+    D1 -->|Yes| C5_2
+    
+    C5_2[CHECK 2: GPS reasonable?<br/>Map+pin matches<br/>restaurant location?] --> D2{D2}
+    D2 -->|No| RJ2
+    D2 -->|Yes| C5_3
+    
+    C5_3[CHECK 3: Quantity realistic?<br/>32kg matches photo<br/>containers?] --> D3{D3}
+    D3 -->|No| RJ3
+    D3 -->|Yes| C5_4
+    
+    C5_4[CHECK 4: Timestamp OK?<br/>Within 2-3PM window?] --> D4{D4}
+    D4 -->|No| RJ4
+    D4 -->|Yes| C5_5
+    
+    C5_5[CHECK 5: Acknowledgement?<br/>Signature visible?<br/>Donor name present?] --> D5{D5}
+    D5 -->|No| RJ5
+    D5 -->|Yes| OUTCOME
+    
+    %% REJECTION PATH
+    RJ1[Photos unclear/missing] --> REJECT
+    RJ2[GPS location incorrect] --> REJECT
+    RJ3[Quantity mismatch] --> REJECT
+    RJ4[Timestamp outside window] --> REJECT
+    RJ5[No acknowledgement] --> REJECT
+    
+    REJECT[STEP 6: REJECT Submission<br/>Coordinator clicks REJECT<br/>Must choose reason:<br/>• Photos unclear/missing<br/>• GPS location incorrect<br/>• Quantity mismatch<br/>• No acknowledgement<br/>• Other free-text] --> R2
+    
+    R2[STEP 7: Rejection Actions<br/>• Status: Pending to Rejected<br/>• Record rejection reason<br/>• Record verifier name/time<br/>• Create audit log<br/>• SMS driver: Submission<br/>rejected. Reason: photos.<br/>Resubmit clearer data<br/>• Alert if rejection pattern] --> C9
+    
+    %% OUTCOME
+    OUTCOME{STEP 8: Verification Outcome} -->|Option A: APPROVE| APPROVE
+    OUTCOME -->|Option B: REJECT| REJECT
+    OUTCOME -->|Option C: Needs Correction| CORRECT
+    
+    APPROVE[STEP 9A: APPROVE<br/>Click APPROVE<br/>• Status: Pending to Verified<br/>• Record verifier: Priya Sharma<br/>• Record time: 5:30 PM<br/>• Audit log entry<br/>• Sync: Google Sheets row<br/>• Database: mark verified<br/>• Dashboard metrics update<br/>• SMS driver: Verified OK] --> C9
+    
+    CORRECT[STEP 9C: Needs Correction<br/>For minor fixable issues<br/>Examples: Update quantity,<br/>complete notes<br/>• Status: Needs Correction<br/>• Add comments for driver<br/>• SMS with required fixes<br/>Driver must resubmit] --> C9
+    
+    C9[END: All submissions<br/>processed. Queue updated]
