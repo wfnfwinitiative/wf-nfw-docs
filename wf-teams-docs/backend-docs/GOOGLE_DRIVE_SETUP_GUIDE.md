@@ -237,25 +237,6 @@ The refresh token becomes invalid if:
 
 ---
 
-## Advanced Option: Service Account (Recommended for Production)
-
-A **Service Account** is a special Google account for machines/servers — not humans. It is the proper production approach because:
-
-- No human account is involved — no consent screen, no token expiry issues
-- Drivers see nothing Google-related at all
-- No OAuth flow needed — just a JSON key file
-
-### Service Account Setup
-1. Go to **APIs & Services → Credentials → Create Credentials → Service Account**
-2. Name it `nofoodwaste-uploader` → click **Create and Continue** → **Done**
-3. Click the service account → **Keys tab → Add Key → Create new key → JSON**
-4. Download the JSON file — this replaces Client ID + Secret + Refresh Token
-5. Share your Google Drive folder with the service account's email (shown in the service account details, looks like `nofoodwaste-uploader@your-project.iam.gserviceaccount.com`) with **Editor** access
-6. Store the JSON key contents as an environment variable `GOOGLE_SERVICE_ACCOUNT_JSON`
-7. Update the backend to use `google-auth` library with the service account JSON instead of OAuth flow
-
-> Ask the development team to implement the service account approach before going to production — it is more stable and does not require re-authentication.
-
 ---
 
 ## Summary of Credentials and Who Holds Them
