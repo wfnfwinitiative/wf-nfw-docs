@@ -99,7 +99,7 @@ This generates the Client ID and Client Secret your backend needs.
 5. Enter:
    - **Name:** `NoFoodWaste Backend`
 6. Under **Authorized redirect URIs**, click **+ Add URI** and add:
-   - `https://your-backend-domain.vercel.app/api/oauth2callback`
+   - `https://wf-nfw-services-two.vercel.app/api/oauth2callback`
    - Also add `http://localhost:8000/api/oauth2callback` (for local development/testing)
 
    > **Critical:** The redirect URI here must **exactly match** what's in your `.env` file (`GOOGLE_REDIRECT_URI`). Even a trailing slash difference will cause it to fail.
