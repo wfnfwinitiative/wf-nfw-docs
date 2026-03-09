@@ -46,6 +46,9 @@ The key insight: **drivers never interact with Google directly**. The admin's Go
 2. Search for **Google Drive API**
 3. Click on it → click **Enable**
 
+<img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/b4b35046-b9c5-49cd-8838-9e6e9adaba45" />
+
+
 This gives your project permission to use Google Drive functionality.
 
 ---
@@ -71,6 +74,8 @@ This is the screen users see when granting permission. For production (real user
 1. Click **Add or Remove Scopes**
 2. Search for and select: `https://www.googleapis.com/auth/drive.file`
    - This scope only allows the app to manage files **it creates** — it cannot read or delete other files in the Drive. This is the minimum required permission.
+   - <img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/83e3a22e-748b-43ec-ac7b-7a8313cb0f61" />
+
 3. Click **Update** → **Save and Continue**
 
 ### Test Users Page
@@ -87,21 +92,24 @@ This generates the Client ID and Client Secret your backend needs.
 
 1. Go to **APIs & Services → Credentials**
 2. Click **+ Create Credentials → OAuth client ID**
-3. Select **Application type: Web application**
-4. Enter:
+3. <img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/63d92d06-3f15-4a9b-836b-7af94c17e5d5" />
+<img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/ee6e6adf-c965-4740-8e5a-ac3ced12b8a0" />
+
+4. Select **Application type: Web application**
+5. Enter:
    - **Name:** `NoFoodWaste Backend`
-5. Under **Authorized redirect URIs**, click **+ Add URI** and add:
+6. Under **Authorized redirect URIs**, click **+ Add URI** and add:
    - `https://your-backend-domain.vercel.app/api/oauth2callback`
    - Also add `http://localhost:8000/api/oauth2callback` (for local development/testing)
 
    > **Critical:** The redirect URI here must **exactly match** what's in your `.env` file (`GOOGLE_REDIRECT_URI`). Even a trailing slash difference will cause it to fail.
 
-6. Click **Create**
-7. A popup shows your:
+7. Click **Create**
+8. A popup shows your:
    - **Client ID** — looks like: `261552312120-xxxxx.apps.googleusercontent.com`
    - **Client Secret** — looks like: `GOCSPX-xxxxxxxxxx`
-8. Click **Download JSON** to save a backup of these credentials
-9. Store these securely — treat the Client Secret like a password
+9. Click **Download JSON** to save a backup of these credentials
+10. Store these securely — treat the Client Secret like a password
 
 ---
 
