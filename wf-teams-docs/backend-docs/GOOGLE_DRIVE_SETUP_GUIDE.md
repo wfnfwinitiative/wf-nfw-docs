@@ -46,6 +46,9 @@ The key insight: **drivers never interact with Google directly**. The admin's Go
 2. Search for **Google Drive API**
 3. Click on it → click **Enable**
 
+<img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/b4b35046-b9c5-49cd-8838-9e6e9adaba45" />
+
+
 This gives your project permission to use Google Drive functionality.
 
 ---
@@ -71,6 +74,8 @@ This is the screen users see when granting permission. For production (real user
 1. Click **Add or Remove Scopes**
 2. Search for and select: `https://www.googleapis.com/auth/drive.file`
    - This scope only allows the app to manage files **it creates** — it cannot read or delete other files in the Drive. This is the minimum required permission.
+   - <img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/83e3a22e-748b-43ec-ac7b-7a8313cb0f61" />
+
 3. Click **Update** → **Save and Continue**
 
 ### Test Users Page
@@ -87,21 +92,24 @@ This generates the Client ID and Client Secret your backend needs.
 
 1. Go to **APIs & Services → Credentials**
 2. Click **+ Create Credentials → OAuth client ID**
-3. Select **Application type: Web application**
-4. Enter:
+3. <img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/63d92d06-3f15-4a9b-836b-7af94c17e5d5" />
+<img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/ee6e6adf-c965-4740-8e5a-ac3ced12b8a0" />
+
+4. Select **Application type: Web application**
+5. Enter:
    - **Name:** `NoFoodWaste Backend`
-5. Under **Authorized redirect URIs**, click **+ Add URI** and add:
-   - `https://your-backend-domain.vercel.app/api/oauth2callback`
+6. Under **Authorized redirect URIs**, click **+ Add URI** and add:
+   - `https://wf-nfw-services-two.vercel.app/api/oauth2callback`
    - Also add `http://localhost:8000/api/oauth2callback` (for local development/testing)
 
    > **Critical:** The redirect URI here must **exactly match** what's in your `.env` file (`GOOGLE_REDIRECT_URI`). Even a trailing slash difference will cause it to fail.
 
-6. Click **Create**
-7. A popup shows your:
+7. Click **Create**
+8. A popup shows your:
    - **Client ID** — looks like: `261552312120-xxxxx.apps.googleusercontent.com`
    - **Client Secret** — looks like: `GOCSPX-xxxxxxxxxx`
-8. Click **Download JSON** to save a backup of these credentials
-9. Store these securely — treat the Client Secret like a password
+9. Click **Download JSON** to save a backup of these credentials
+10. Store these securely — treat the Client Secret like a password
 
 ---
 
@@ -228,25 +236,6 @@ The refresh token becomes invalid if:
 **Fix:** Re-run Step 7 to get a new refresh token, update `GOOGLE_REFRESH_TOKEN` in Vercel, and redeploy.
 
 ---
-
-## Advanced Option: Service Account (Recommended for Production)
-
-A **Service Account** is a special Google account for machines/servers — not humans. It is the proper production approach because:
-
-- No human account is involved — no consent screen, no token expiry issues
-- Drivers see nothing Google-related at all
-- No OAuth flow needed — just a JSON key file
-
-### Service Account Setup
-1. Go to **APIs & Services → Credentials → Create Credentials → Service Account**
-2. Name it `nofoodwaste-uploader` → click **Create and Continue** → **Done**
-3. Click the service account → **Keys tab → Add Key → Create new key → JSON**
-4. Download the JSON file — this replaces Client ID + Secret + Refresh Token
-5. Share your Google Drive folder with the service account's email (shown in the service account details, looks like `nofoodwaste-uploader@your-project.iam.gserviceaccount.com`) with **Editor** access
-6. Store the JSON key contents as an environment variable `GOOGLE_SERVICE_ACCOUNT_JSON`
-7. Update the backend to use `google-auth` library with the service account JSON instead of OAuth flow
-
-> Ask the development team to implement the service account approach before going to production — it is more stable and does not require re-authentication.
 
 ---
 
