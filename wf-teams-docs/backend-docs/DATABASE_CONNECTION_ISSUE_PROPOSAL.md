@@ -9,7 +9,7 @@
 
 ## Table of Contents
 
-1. [The Problem — Plain English](#1-the-problem--plain-english)
+1. [The Problem](#1-the-problem--plain-english)
 2. [Why This Happens — Technical Root Cause](#2-why-this-happens--technical-root-cause)
 3. [Will Upgrading to a Paid Plan Fix It?](#3-will-upgrading-to-a-paid-plan-fix-it)
 4. [How We Can Solve This on the Free Plan](#4-how-we-can-solve-this-on-the-free-plan)
